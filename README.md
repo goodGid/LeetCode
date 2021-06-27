@@ -14,5 +14,5 @@
 
 | Name | Language | Repository |
 |:---|:---:|:---:|
-| | | |
+|syureu | Rust, Kotlin | https://github.com/syureu/21ReetCodeStudy |
 | | | | 
