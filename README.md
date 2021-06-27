@@ -12,7 +12,7 @@
 
 ## Member
 
-| Nickname | Language | Repository |
+| Name | Language | Repository |
 |:---|:---:|:---:|
 | | | |
 | | | | 
