@@ -12,14 +12,15 @@
 
 ## Member
 
-| Name | Language | Repository |
-|:---|:---:|:---:|
-|syureu | Rust, Kotlin | https://github.com/syureu/21ReetCodeStudy |
-| wonyong-park| Java |https://github.com/wonyong-park/LeetCode  | 
-| sangwoo0727 | Java | https://github.com/sangwoo0727/LeetCode |
-| jessi68 | Java | https://github.com/jessi68/LeetCode |
-| hyperminji | Python, Java | https://github.com/hyperminji/LeetCode |
-| milanoderby | Java | https://github.com/milanoderby/LeetCode |
-| ctk03272 | Java, Javascript | https://github.com/ctk03272/21LeetCode |
-| sangdo913 | Kotlin, C++ | https://github.com/sangdo913/leetcode |
-| eotkd4791 | Javascript | https://github.com/eotkd4791/LeetCode-study |
+| No | Name | Language | Repository |
+|:---|:---|:---:|:---:|
+| 1 | goodGid | Java | https://github.com/goodGid/LeetCode |
+| 2 | syureu | Rust, Kotlin | https://github.com/syureu/21ReetCodeStudy |
+| 3 | wonyong-park| Java |https://github.com/wonyong-park/LeetCode  | 
+| 4 | sangwoo0727 | Java | https://github.com/sangwoo0727/LeetCode |
+| 5 | jessi68 | Java | https://github.com/jessi68/LeetCode |
+| 6 | hyperminji | Python, Java | https://github.com/hyperminji/LeetCode |
+| 7 | milanoderby | Java | https://github.com/milanoderby/LeetCode |
+| 8 | ctk03272 | Java, Javascript | https://github.com/ctk03272/21LeetCode |
+| 9 | sangdo913 | Kotlin, C++ | https://github.com/sangdo913/leetcode |
+| 10 | eotkd4791 | Javascript | https://github.com/eotkd4791/LeetCode-study |
