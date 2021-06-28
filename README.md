@@ -20,3 +20,6 @@
 | jessi68 | Java | https://github.com/jessi68/LeetCode |
 | hyperminji | Python, Java | https://github.com/hyperminji/LeetCode |
 | milanoderby | Java | https://github.com/milanoderby/LeetCode |
+| ctk03272 | Java, Javascript | https://github.com/ctk03272/21LeetCode |
+| sangdo913 | Kotlin, C++ | https://github.com/sangdo913/leetcode |
+| eotkd4791 | Javascript | https://github.com/eotkd4791/LeetCode-study |
