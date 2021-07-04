@@ -7,7 +7,7 @@
 
 ## Problem
 
-* [🔥 Top 100 Liked Questions](https://leetcode.com/problemset/all/?listId=79h8rn6)
+* [🔥 Top 100 Liked Questions](https://leetcode.com/problemset/all/?listId=79h8rn6) -> Acceptance 높은 순
 
 
 ## Member
