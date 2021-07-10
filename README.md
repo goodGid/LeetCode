@@ -1,3 +1,7 @@
+## LeetCode Study
+
+* 210705(Mon) 1주일 2~3개 LeetCode 풀기 스터디 시작 !
+
 ## Index
 
 * [LeetHub](https://github.com/QasimWani/LeetHub) Plugin을 사용해서 각자 Repo에 Code를 관리한다.
