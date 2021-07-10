@@ -1,4 +1,4 @@
-## LeetCode Study
+## Study
 
 * 210705(Mon) 1주일 2~3개 LeetCode 풀기 스터디 시작 !
 
