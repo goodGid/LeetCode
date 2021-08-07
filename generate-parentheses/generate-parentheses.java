@@ -1,41 +1,28 @@
 class Solution {
 
-    int left_cnt;
-    int right_cnt;
     List<String> ansList = new ArrayList<>();
 
     public List<String> generateParenthesis(int n) {
-
-        List<String> ansCandidate = new ArrayList<>();
-        solve(ansCandidate, n);
+        solve(new StringBuilder(), n, 0, 0);
         return ansList;
     }
 
-    private void solve(List<String> ansCandidate, int n) {
-        if (ansCandidate.size() == n * 2) {
-
-            StringBuilder sb = new StringBuilder();
-            for (String s : ansCandidate) {
-                sb.append(s);
-            }
+    private void solve(StringBuilder sb, int n, int open, int close) {
+        if (sb.length() == n * 2) {
             ansList.add(sb.toString());
             return;
         }
 
-        if (left_cnt < n) {
-            ansCandidate.add("(");
-            left_cnt++;
-            solve(ansCandidate, n);
-            ansCandidate.remove(ansCandidate.size() - 1);
-            left_cnt--;
+        if (open < n) {
+            sb.append("(");
+            solve(sb, n, open + 1, close);
+            sb.deleteCharAt(sb.length() - 1);
         }
 
-        if (left_cnt >= right_cnt + 1) {
-            ansCandidate.add(")");
-            right_cnt++;
-            solve(ansCandidate, n);
-            ansCandidate.remove(ansCandidate.size() - 1);
-            right_cnt--;
+        if (open > close) {
+            sb.append(")");
+            solve(sb, n, open, close + 1);
+            sb.deleteCharAt(sb.length() - 1);
         }
     }
 }
