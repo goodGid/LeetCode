@@ -1,30 +1,37 @@
 class Solution {
     public List<Integer> partitionLabels(String s) {
-        int size = s.length();
-        List<Integer> answerList = new ArrayList<>();
-        int[] alphaArray = new int[26];
-        Arrays.fill(alphaArray, -1);
-
+        
+        List<Integer> ansList = new ArrayList<>();
+        boolean[] visit = new boolean[26];
+        int[] dp = new int[26];
+        
         char[] charArray = s.toCharArray();
-
-        for (int i = 0; i < s.length(); i++) {
-            alphaArray[charArray[i] - 'a'] = i;
+        int size = charArray.length;
+        for (int i=0; i<size; i++) {
+            dp[charArray[i] - 'a']++;
         }
-
-        int highIndex = -1;
-        int stIndex = 0;
-
-        for (int i = 0; i < size; i++) {
-            if (alphaArray[charArray[i] - 'a'] > highIndex) {
-                highIndex = alphaArray[charArray[i] - 'a'];
+        
+        int length = 0;
+        StringBuilder sb = new StringBuilder();
+        
+        for (int i=0; i<size; i++) {
+            int idx = charArray[i] - 'a';
+            
+            if (dp[idx] != 0 && visit[idx] == false)  {
+                visit[idx] = true;
+                length += dp[idx];
             }
-
-            if (i == highIndex) {
-                answerList.add(i - stIndex + 1);
-                stIndex = i + 1;
-            }
+            
+            sb.append(charArray[i]);
+            length--;
+            
+            if (length == 0 ) {
+                ansList.add(sb.toString().length());
+                sb = new StringBuilder();
+            }            
         }
-
-        return answerList;
+        
+        return ansList;
+        
     }
 }
