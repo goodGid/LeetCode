@@ -1,16 +1,42 @@
 class Solution {
     public int findKthLargest(int[] nums, int k) {
+        return quickselect(nums, 0, nums.length - 1, nums.length - k);
+    }
 
-        PriorityQueue<Integer> queue = new PriorityQueue<>(Collections.reverseOrder());
+    private int quickselect(int[] nums, int left, int right, int target) {
 
-        for (int i = 0; i < nums.length; i++) {
-            queue.add(nums[i]);
+        int l = left;
+        int r = right;
+        int pivot = nums[l + (r - l) / 2];
+
+        while (l <= r) {
+            while (l <= r && nums[l] < pivot) {
+                l++;
+            }
+
+            while (l <= r && nums[r] > pivot) {
+                r--;
+            }
+
+            if (l <= r) {
+                swap(nums, l, r);
+                l++;
+                r--;
+            }
         }
 
-        int ans = 0;
-        for (int i = 0; i < k; i++) {
-            ans = queue.poll();
+        if (target <= r) {
+            return quickselect(nums, left, r, target);
+        } else if (target >= l) {
+            return quickselect(nums, l, right, target);
         }
-        return ans;
+
+        return nums[target];
+    }
+
+    private void swap(int[] nums, int a, int b) {
+        int temp = nums[a];
+        nums[a] = nums[b];
+        nums[b] = temp;
     }
 }
