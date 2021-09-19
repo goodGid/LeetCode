@@ -1,21 +1,35 @@
+
 class Solution {
     public int[] countBits(int n) {
         
-        int[] ansArray = new int[n+1];
-        
-        for (int i=0; i<=n; i++){
-            ansArray[i] = getBitsCountBy(i);
+        if (n == 0) {
+            return new int[] { 0 };
         }
-        return ansArray;
+        
+        int[] ans = new int[n + 1];
+        int[] dp = new int[n + 1];
+
+        ans[0] = dp[0] = 0;
+        ans[1] = dp[1] = 1;
+
+        int pivot = 0;
+
+        for (int i = 2; i <= n; i++) {
+            if (twoN(i)) {
+                ans[i] = dp[i] = 1;
+                pivot++;
+                continue;
+            }
+
+            int pow = (int) Math.pow(2, pivot);
+            dp[i] = 1 + dp[i - pow];
+            ans[i] = dp[i];
+        }
+
+        return ans;
     }
-    
-    public int getBitsCountBy(int n){
-        
-        int cnt = 0;
-        while (n != 0){
-            cnt = n % 2 == 0 ? cnt : cnt + 1;
-            n /= 2;
-        }
-        return cnt;
+
+    private boolean twoN(int num) {
+        return (num & (num - 1)) == 0;
     }
 }
