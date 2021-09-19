@@ -15,32 +15,16 @@
  */
 class Solution {
     public int maxDepth(TreeNode root) {
-        if (root == null){
-            return 0;
-        }
-        
-        return getMaxDepth(root, 1);
+        return go(root,0,0);
     }
     
-    public int getMaxDepth(TreeNode node, int ans){
-        if(node == null){
-            return ans;
+    private int go(TreeNode node, int depth, int ans) {
+        if (node == null) {
+            return depth;
         }
         
-        int leftMaxDepth =0;
-        int rightMaxDepth = 0;
-        
-        if (node.left != null){
-            leftMaxDepth = getMaxDepth(node.left, ans+1);
-            System.out.println("leftMaxDepth : " + leftMaxDepth);
-        }
-        
-        if (node.right != null){
-            rightMaxDepth = getMaxDepth(node.right, ans+1);
-            System.out.println("rightMaxDepth : " + rightMaxDepth);
-        }
-        
-        ans = Math.max(ans, Math.max(leftMaxDepth,rightMaxDepth));
+        ans = Math.max(ans, go(node.left, depth+1, ans));
+        ans = Math.max(ans, go(node.right, depth+1, ans));
         
         return ans;
     }
