@@ -1,28 +1,37 @@
 class Solution {
-
-    List<String> ansList = new ArrayList<>();
-
+    private String left = "(";
+    private String right = ")";
+    List<String> answer = new ArrayList<>();
+    
     public List<String> generateParenthesis(int n) {
-        solve(new StringBuilder(), n, 0, 0);
-        return ansList;
+        go(n, new ArrayList<>(), 0, 0);
+        return answer;
     }
-
-    private void solve(StringBuilder sb, int n, int open, int close) {
-        if (sb.length() == n * 2) {
-            ansList.add(sb.toString());
-            return;
+    
+    private void go(int n, List<String> ans, int lc, int rc) {
+        if (ans.size() == n*2) {
+            StringBuilder sb = new StringBuilder();
+            
+            for (int i=0; i<ans.size(); i++) {
+                sb.append(ans.get(i));
+            }
+            answer.add(sb.toString());
+            return ;
         }
-
-        if (open < n) {
-            sb.append("(");
-            solve(sb, n, open + 1, close);
-            sb.deleteCharAt(sb.length() - 1);
+        
+        if (lc < rc) {
+            return ;
         }
-
-        if (open > close) {
-            sb.append(")");
-            solve(sb, n, open, close + 1);
-            sb.deleteCharAt(sb.length() - 1);
+        
+        if (lc < n) {
+            ans.add(left);
+            go(n, ans, lc+1, rc);
+            ans.remove(ans.size()-1);
         }
+        
+        ans.add(right);
+        go(n, ans, lc, rc+1);
+        ans.remove(ans.size()-1);
+        
     }
 }
