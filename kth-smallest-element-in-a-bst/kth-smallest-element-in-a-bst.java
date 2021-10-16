@@ -14,34 +14,18 @@
  * }
  */
 class Solution {
-    int depth = 0;
-    int ans = 0;
     public int kthSmallest(TreeNode root, int k) {
-        
-        go(root,k);
-        
-        return ans;
+        List<TreeNode> list = new ArrayList<>();
+        go(root, k, list);
+        return list.get(k-1).val;
     }
     
-    private void go(TreeNode head, int k) {
-        
-        if (head.left != null) {
-            go(head.left, k);
+    private void go(TreeNode node, int k, List<TreeNode> list) {
+        if (node == null) {
+            return ;
         }
-        
-        depth++;        
-        print(head);
-        if (depth == k) {
-            ans = head.val;
-        }   
-        
-        if (head.right != null) {
-            go(head.right, k);
-        }
+        go(node.left, k, list);
+        list.add(node);
+        go(node.right, k, list);
     }
-    
-    private void print(TreeNode node) {
-        System.out.println(node.val + " " + depth);
-    }
-    
 }
