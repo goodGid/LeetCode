@@ -1,43 +1,44 @@
 class Solution {
-
-  private int answer;
-  private int len;
-  private boolean[][] dp;
-
-  public int countSubstrings(String s) {
-    initData(s);
-    findPalindrome(s);
-    return answer;
-  }
-
-  private void findPalindrome(String s) {
-    for (int j = 0; j < len; j++) {
-      for (int i = j; i >= 0; i--) {
-        if (isPalindrome(i, j, s)) {
-          dp[i][j] = true;
-          answer++;
+    public int countSubstrings(String input) {
+        List<String> ans = new ArrayList<>();
+        for (int i=0; i<input.length(); i++) {
+            go(input, "", ans, i);
         }
-      }
-    }
-  }
-
-  private void initData(String s) {
-    len = s.length();
-    dp = new boolean[len][len];
-  }
-
-  private boolean isPalindrome(int i, int j, String s) {
-    if (i == j) {
-      return true;
-    }
-    if (s.charAt(i) != s.charAt(j)) {
-      return false;
+        
+        return ans.size();
     }
     
-      if (j - i - 1 == 0) {
-      return true;
-    } else {
-      return dp[i + 1][j - 1];
+    private void go(String input, String s, List<String> ans, int idx) {
+        if (input.length() == idx) {
+            if (isPalindrom(s)) {
+                ans.add(s);
+            }
+            return ;
+        }
+        
+        if (isPalindrom(s)) {
+            ans.add(s);
+        }
+        
+        go(input, s + input.charAt(idx), ans, idx+1);
+        
     }
-  }
+    
+    private boolean isPalindrom(String s) {
+        if (s.equals("")) {
+            return false;
+        }
+        
+        int left = 0;
+        int right = s.length()-1;
+        
+        while (left <= right) {
+            if (s.charAt(left) != s.charAt(right)) {
+                return false;
+            }
+            left++;
+            right--;
+        }
+        return true;
+    }
 }
