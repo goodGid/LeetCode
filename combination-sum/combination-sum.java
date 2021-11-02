@@ -1,33 +1,34 @@
 class Solution {
-    int target;
-    List<List<Integer>> ans = new ArrayList<>();
+    public List<List<Integer>> combinationSum(int[] candidates, int target) {
 
-    public List<List<Integer>> combinationSum(int[] candidates, int t) {
-        target = t;
-        dfs(candidates, 0, 0, new ArrayList<>());
+        Arrays.sort(candidates);
+        List<List<Integer>> ans = new ArrayList<>();
+        go(candidates, target, ans, new ArrayList<>(), 0);
         return ans;
     }
 
-    public void dfs(int[] candidates, int idx, int sum, List<Integer> ca) {
-        if (sum > target) {
-            return;
+    private void go(int[] arr, int target, List<List<Integer>> ans, List<Integer> tempAns, int idx) {
+
+        // int sum = tempAns.stream().mapToInt(i -> i).sum();
+        int sum = 0;
+        for (int i : tempAns) {
+            sum += i;
         }
+
         if (sum == target) {
-            ans.add(new ArrayList<>(ca));
+            List<Integer> temp = new ArrayList<>();
+            for (int i : tempAns) {
+                temp.add(i);
+            }
+            ans.add(temp);
+        } else if (sum > target) {
             return;
         }
 
-        for (int i = idx; i < candidates.length; i++) {
-            ca.add(candidates[i]);
-            dfs(candidates, i, sum + candidates[i], ca);
-            ca.remove(ca.size() - 1);
+        for (int i = idx; i < arr.length; i++) {
+            tempAns.add(arr[i]);
+            go(arr, target, ans, tempAns, i);
+            tempAns.remove(tempAns.size() - 1);
         }
-    }
-    
-    public void print(List<Integer> ca) {
-        for (Integer item : ca) {
-            System.out.print(item + " ");
-        }
-        System.out.println();
     }
 }
