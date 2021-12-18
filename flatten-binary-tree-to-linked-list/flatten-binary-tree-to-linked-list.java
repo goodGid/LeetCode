@@ -13,28 +13,23 @@
  *     }
  * }
  */
-
-// Time : O(N)
-// Space : O(Height)
 class Solution {
     public void flatten(TreeNode root) {
-        if (root == null) {
-            return ;
+        
+        while ( root != null) {
+            TreeNode temp = root.right;
+            
+            if (root.left != null) {
+                root.right = root.left;
+                TreeNode head = root.right;
+                
+                while (head.right != null) {
+                    head = head.right;
+                }
+                head.right = temp;
+            }
+            root.left = null;
+            root = root.right;
         }
-        
-        TreeNode tempLeft = root.left;
-        TreeNode tempRight = root.right;
-        
-        root.left = null;
-        
-        flatten(tempLeft);
-        flatten(tempRight);
-        
-        root.right = tempLeft;
-        TreeNode current = root;
-        while (current.right != null) {
-            current = current.right;
-        }
-        current.right = tempRight;
     }
 }
