@@ -1,34 +1,50 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
 class Solution {
     public TreeNode buildTree(int[] preorder, int[] inorder) {
-        return recur(preorder, 0, preorder.length - 1,
-                     inorder, 0, inorder.length - 1);
-    }
+        return go(preorder, inorder, 
+           0, preorder.length-1,
+           0, inorder.length-1);
 
-    private TreeNode recur(int[] preorder, int preStart, int preEnd,
-                           int[] inorder, int inStart, int inEnd) {
-        if (preStart > preEnd || inStart > inEnd) {
+    }
+    
+    private TreeNode go(int[] preorder, int[] inorder, 
+                        int preLeftIdx, int preRightIdx, 
+                        int inLeftIdx, int inRightIdx) {
+        
+        if (preLeftIdx > preRightIdx) {
             return null;
         }
-
-        TreeNode root = new TreeNode(preorder[preStart]);
-
-        int inorderRootIdx = inStart;
-        for (int i = inStart; i <= inEnd; i++) {
-            if (preorder[preStart] == inorder[i]) {
-                inorderRootIdx = i;
-                break;
+        
+        TreeNode node = new TreeNode(preorder[preLeftIdx]);
+        
+        int range = 0;
+        for (int i = inLeftIdx; i<=inRightIdx; i++) {
+            if (inorder[i] == node.val) {
+                range = i - inLeftIdx;
             }
         }
-
-        int subLength = inorderRootIdx - inStart;
-
-        root.left = recur(preorder, preStart + 1, preStart + subLength,
-                          inorder, inStart, inStart + subLength);
-
-        root.right = recur(preorder, preStart + subLength + 1, preEnd,
-                           inorder, inorderRootIdx + 1, inEnd);
-        return root;
-
+        
+        node.left = go(preorder, inorder,
+                      preLeftIdx+1, preLeftIdx + range,
+                      inLeftIdx, inLeftIdx + range - 1);
+        node.right = go(preorder, inorder,
+                       preLeftIdx+1+range, preRightIdx,
+                       inLeftIdx+1+range, inRightIdx);
+        
+        return node;
     }
-
 }
