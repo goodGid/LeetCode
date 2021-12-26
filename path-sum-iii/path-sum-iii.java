@@ -1,48 +1,30 @@
-/**
- * Definition for a binary tree node.
- * public class TreeNode {
- *     int val;
- *     TreeNode left;
- *     TreeNode right;
- *     TreeNode() {}
- *     TreeNode(int val) { this.val = val; }
- *     TreeNode(int val, TreeNode left, TreeNode right) {
- *         this.val = val;
- *         this.left = left;
- *         this.right = right;
- *     }
- * }
- */
+// ref : https://silvergoni.tistory.com/entry/leetcode-437-Path-Sum-III
+
 class Solution {
-    int target;
-    int ans;
-    public int pathSum(TreeNode root, int targetSum) {
-        target = targetSum;        
-        go(new ArrayList<>(), root);
-        return ans;
+    private int count = 0;
+    private int targetSum = 0;
+    private Map<Integer, Integer> map = new HashMap<>();
+
+    public int pathSum(TreeNode root, int sum) {
+        targetSum = sum;
+        solve(root, 0);
+        return count;
     }
-    
-    private void go(List<Integer> list, TreeNode node) {
-        if (node == null) {
-            return ;
+
+    private void solve(TreeNode root, int currentSum) {
+        if (root == null) {
+            return;
         }
-        
-        for (int i=0; i<list.size(); i++) {
-            if ( target == list.get(i) + node.val ) {
-                ans++;
-            }
+
+        currentSum += root.val;
+        if (currentSum == targetSum) {
+            count++;
         }
-        if (target == node.val) {
-            ans++;
-        }
-        
-        List<Integer> newList = new ArrayList<>();
-        for (int i=0; i<list.size(); i++) {
-            newList.add(list.get(i) + node.val);
-        }
-        newList.add(node.val);
-        
-        go(newList, node.left);
-        go(newList, node.right);
+
+        count += map.getOrDefault(currentSum - targetSum, 0);
+        map.put(currentSum, map.getOrDefault(currentSum, 0) + 1);
+        solve(root.left, currentSum);
+        solve(root.right, currentSum);
+        map.put(currentSum, map.get(currentSum) - 1);
     }
 }
