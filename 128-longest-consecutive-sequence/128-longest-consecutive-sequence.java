@@ -9,18 +9,21 @@ class Solution {
         int ans = 0;
 
         for (Map.Entry<Integer, Boolean> item : map.entrySet()) {
-            int curNumber = item.getKey();
-            
-            if (map.get(curNumber - 1) == null) {
-                int conCnt = 1;
-                
-
-                while (map.get(curNumber + 1) != null) {
-                    conCnt++;
-                    curNumber++;
-                }
-                ans = Math.max(ans, conCnt);
+            if (map.get(item.getKey()) == false) {
+                continue;
             }
+
+            int curNumber = item.getKey();
+
+            int conCnt = 1;
+
+            while (map.get(curNumber + 1) != null) {
+                conCnt++;
+                curNumber++;
+                map.put(curNumber, false);
+            }
+
+            ans = Math.max(ans, conCnt);
         }
         return ans;
     }
