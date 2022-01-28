@@ -16,14 +16,9 @@ class Solution {
             } else if (value == 1) {
                 cur++;
             } else { 
-                if (cur == r) {
-                    r--;
-                    cur++;
-                } else {
                     n[cur] = n[r];
                     n[r] = 2;
-                    r--;
-                }
+                r--;
             }
         }
     }
