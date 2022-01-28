@@ -9,14 +9,10 @@ class Solution {
             int value = n[cur];
             
             if (value == 0) {
-                if ( cur == l ) {
-                    l++;
-                    cur++;
-                } else { 
                     n[cur] = n[l];
                     n[l] = 0;
+                    cur++;
                     l++;
-                }
             } else if (value == 1) {
                 cur++;
             } else { 
