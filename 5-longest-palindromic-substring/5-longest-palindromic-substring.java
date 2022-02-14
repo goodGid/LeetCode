@@ -1,7 +1,5 @@
 class Solution {
     public String longestPalindrome(String s) {
-
-        int ansLength = 0;
         String ans = "";
         int size = s.length();
 
@@ -31,7 +29,6 @@ class Solution {
                 }
             }
         }
-
         return ans;
     }
 }
