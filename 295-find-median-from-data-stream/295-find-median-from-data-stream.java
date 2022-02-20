@@ -8,19 +8,11 @@ class MedianFinder {
     }
     
     public void addNum(int num) {
-        if (maxQ.size() == minQ.size()) {
-            maxQ.add(num);
-        } else {
-            minQ.add(num);
-        }
+        minQ.add(num);
+        maxQ.add(minQ.poll());
         
-        while (maxQ.size() > 0 && 
-               minQ.size() > 0 &&
-               maxQ.peek() > minQ.peek()) {
-            Integer maxValue = maxQ.poll();
-            Integer minValue = minQ.poll();
-            maxQ.add(minValue);
-            minQ.add(maxValue);
+        if (maxQ.size() - minQ.size() > 1) {
+            minQ.add(maxQ.poll());
         }
     }
     
