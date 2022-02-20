@@ -17,11 +17,9 @@ class MedianFinder {
     }
     
     public double findMedian() {
-        if (maxQ.size() == minQ.size()) {
-            return ((double) maxQ.peek() + minQ.peek()) / 2;
-        }
-        return (double) maxQ.peek();
+        return maxQ.size() == minQ.size() ? (minQ.peek() + maxQ.peek()) / 2.0 : maxQ.peek(); 
     }
+
 }
 
 /**
