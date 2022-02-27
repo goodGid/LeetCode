@@ -1,43 +1,53 @@
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+// ref : https://leetcode.com/problems/merge-k-sorted-lists/discuss/1761611/JAVA-multiple-approaches-merge-sort-priority-queue
 class Solution {
-    public ListNode mergeKLists(ListNode[] arrayLists) {
+    public ListNode mergeKLists(ListNode[] lists) {
+        if (lists == null || lists.length == 0) {return null;}
+        return mergeKLists(lists, 0, lists.length - 1);
+    }
 
-        ListNode ans = new ListNode();
-        ListNode head = ans;
+    private ListNode mergeKLists(ListNode[] lists, int start, int end) {
+        if (start == end) {return lists[start];}
+        int mid = start + (end - start) / 2;
 
-        List<ListNode> lists = new ArrayList<>();
+        ListNode left = mergeKLists(lists, start, mid);
+        ListNode right = mergeKLists(lists, mid + 1, end);
 
-        for (ListNode node : arrayLists) {
-            if (node != null) {
-                lists.add(node);
-            }
-        }
+        return merge2Lists(left, right);
 
-        while (lists.size() > 0) {
-            int minNodeGroupNo = 0;
-            int minValue = Integer.MAX_VALUE;
-            int size = lists.size();
+    }
 
-            for (int i = 0; i < size; i++) {
-                int nodeValue = lists.get(i).val;
+    private ListNode merge2Lists(ListNode l1, ListNode l2) {
+        ListNode head = new ListNode();
+        ListNode curr = head;
 
-                if (minValue > nodeValue) {
-                    minNodeGroupNo = i;
-                    minValue = nodeValue;
+        while (l1 != null || l2 != null) {
+            if (l1 == null) {
+                curr.next = l2;
+                l2 = l2.next;
+            } else if (l2 == null) {
+                curr.next = l1;
+                l1 = l1.next;
+            } else {
+                if (l2.val > l1.val) {
+                    curr.next = l1;
+                    l1 = l1.next;
+                } else {
+                    curr.next = l2;
+                    l2 = l2.next;
                 }
             }
-
-            head.next = new ListNode(minValue);
-            head = head.next;
-
-            ListNode listNode1 = lists.get(minNodeGroupNo);
-            lists.remove(minNodeGroupNo);
-            listNode1 = listNode1.next;
-
-            if (listNode1 != null) {
-                lists.add(listNode1);
-            }
+            curr = curr.next;
         }
-
-        return ans.next;
+        return head.next;
     }
 }
