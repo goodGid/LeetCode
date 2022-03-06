@@ -1,13 +1,45 @@
 class Solution {
     public int[] replaceElements(int[] arr) {
-        int max = -1;
-        int[] output = new int[arr.length];
+        if (arr.length == 1) {
+            return new int[]{-1};
+        }
+        int[] ans = new int[arr.length];
 
-        for (int i = arr.length - 1; i >= 0; i--) {
-            output[i] = max;
-            max = Math.max(max, arr[i]);
+        PriorityQueue<Node> queue = new PriorityQueue<>();
+
+        for (int i = 1; i < arr.length; i++) {
+            queue.add(new Node(i, arr[i]));
         }
 
-        return output;
+        ans[0] = queue.peek().value;
+        ans[arr.length-1] = -1;
+        int ansIdx = 1;
+
+        while (!queue.isEmpty()) {
+            Node node = queue.peek();
+            if (ansIdx >= node.index) {
+                queue.poll();
+                continue;
+            }
+            ans[ansIdx] = queue.peek().value;
+            ansIdx++;
+        }
+
+        return ans;
+    }
+
+    public class Node implements Comparable<Node> {
+        private int index;
+        private int value;
+
+        public Node(int index, int value) {
+            this.index = index;
+            this.value = value;
+        }
+
+        @Override
+        public int compareTo(Node newNode) {
+            return newNode.value - value;
+        }
     }
 }
