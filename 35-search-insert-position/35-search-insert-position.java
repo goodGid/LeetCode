@@ -1,19 +1,32 @@
 class Solution {
     public int searchInsert(int[] nums, int target) {
-
-        int idx = Arrays.binarySearch(nums, target);
-
-        if (idx >= 0) {
-            return idx;
+        if (target > nums[nums.length - 1]) {
+            return nums.length;
         }
+        int pos = -1;
 
-        int ans = nums.length;
-        for (int i = 0; i < nums.length; i++) {
-            if (nums[i] > target) {
-                ans = i;
+        int l = 0;
+        int r = nums.length;
+        int m;
+
+        while (l <= r) {
+            m = (l + r) / 2;
+            if (nums[m] == target) {
+                pos = m;
                 break;
             }
+
+            if (nums[m] > target) {
+                r = m - 1;
+            } else {
+                l = m + 1;
+            }
         }
-        return ans;
+
+        if (pos == -1) {
+            pos = l;
+        }
+
+        return pos;
     }
 }
