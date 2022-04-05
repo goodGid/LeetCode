@@ -1,42 +1,29 @@
+// 220406 
+// 다른 사람 풀이 기록을 위한 제출 
 class Solution {
     public int[] maxSlidingWindow(int[] nums, int k) {
+        LinkedList<Integer> q = new LinkedList<Integer>();
+        int left = 0;
+        int right = 0;
 
-        PriorityQueue<Node> pq = new PriorityQueue<>((o1, o2) -> o2.getVal() - o1.getVal());
+        int[] res = new int[nums.length - k + 1];
+        int index = 0;
 
-        for (int i = 0; i < k - 1; i++) {
-            pq.add(new Node(i, nums[i]));
-        }
-
-        int l = -1;
-        int[] ans = new int[nums.length - k + 1];
-
-        for (int r = k - 1; r < nums.length; r++) {
-            l++;
-            pq.add(new Node(r, nums[r]));
-
-            while (pq.peek().getIdx() < l) {
-                pq.poll();
+        while (right < nums.length) {
+            while (!q.isEmpty() && nums[q.peekLast()] <= nums[right]) {
+                q.removeLast();
             }
-            ans[l] = pq.peek().getVal();
+            q.addLast(right);
+            right++;
+
+            if (right - left == k) {
+                if (right - q.peekFirst() > k) {
+                    q.removeFirst();
+                }
+                res[index++] = nums[q.peekFirst()];
+                left++;
+            }
         }
-        return ans;
-    }
-}
-
-class Node {
-    int idx;
-    int val;
-
-    public int getVal() {
-        return val;
-    }
-
-    public int getIdx() {
-        return idx;
-    }
-
-    public Node(int idx, int val) {
-        this.idx = idx;
-        this.val = val;
+        return res;
     }
 }
