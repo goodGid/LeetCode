@@ -12,26 +12,26 @@ class Solution {
 
         if (n1.length == 0) {
             if (isEven) {
-                return ((double) n2[mid] + (double) n2[mid - 1]) / 2;
+                return (n2[mid] + n2[mid - 1]) / 2.0;
             } else {
-                return (double) n2[mid];
+                return n2[mid] / 1.0;
             }
         }
 
         if (n2.length == 0) {
             if (isEven) {
-                return ((double) n1[mid] + (double) n1[mid - 1]) / 2;
+                return (n1[mid] + n1[mid - 1]) / 2.0;
             } else {
-                return (double) n1[mid];
+                return n1[mid] / 1.0;
             }
         }
 
         while (isRange(idx1, n1) && isRange(idx2, n2)) {
             if (idx1 + idx2 == mid + 1) {
                 if (isEven) {
-                    return ((double) ansArr[ansArrIdx - 1] + (double) ansArr[ansArrIdx - 2]) / 2;
+                    return (ansArr[ansArrIdx - 1] + ansArr[ansArrIdx - 2]) / 2.0;
                 } else {
-                    return (double) ansArr[ansArrIdx - 1];
+                    return ansArr[ansArrIdx - 1] / 1.0;
                 }
             }
             if (n1[idx1] > n2[idx2]) {
@@ -46,9 +46,9 @@ class Solution {
         while (isRange(idx1, n1)) {
             if (idx1 + idx2 == mid + 1) {
                 if (isEven) {
-                    return ((double) ansArr[ansArrIdx - 1] + (double) ansArr[ansArrIdx - 2]) / 2;
+                    return (ansArr[ansArrIdx - 1] + ansArr[ansArrIdx - 2]) / 2.0;
                 } else {
-                    return (double) ansArr[ansArrIdx - 1];
+                    return ansArr[ansArrIdx - 1] / 1.0;
                 }
             }
             ansArr[ansArrIdx++] = n1[idx1];
@@ -58,16 +58,16 @@ class Solution {
         while (isRange(idx2, n2)) {
             if (idx1 + idx2 == mid + 1) {
                 if (isEven) {
-                    return ((double) ansArr[ansArrIdx - 1] + (double) ansArr[ansArrIdx - 2]) / 2;
+                    return (ansArr[ansArrIdx - 1] + ansArr[ansArrIdx - 2]) / 2.0;
                 } else {
-                    return (double) ansArr[ansArrIdx - 1];
+                    return ansArr[ansArrIdx - 1] / 1.0;
                 }
             }
             ansArr[ansArrIdx++] = n2[idx2];
             idx2++;
         }
 
-        return (double) (ansArr[0] + ansArr[1]) / 2;
+        return (ansArr[0] + ansArr[1]) / 2.0;
     }
 
     private boolean isRange(int idx, int[] arr) {
