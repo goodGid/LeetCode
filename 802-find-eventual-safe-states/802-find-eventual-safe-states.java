@@ -1,40 +1,40 @@
 class Solution {
-    public List<Integer> eventualSafeNodes(int[][] g) {
+    public List<Integer> eventualSafeNodes(int[][] G) {
+        int N = G.length;
+        boolean[] safe = new boolean[N];
 
-        List<Set<Integer>> fromToList = new ArrayList<>();
-        List<Set<Integer>> toFromList = new ArrayList<>();
-
-        int size = g.length;
-
-        for (int i = 0; i < size; i++) {
-            fromToList.add(new HashSet<>());
-            toFromList.add(new HashSet<>());
+        List<Set<Integer>> graph = new ArrayList();
+        List<Set<Integer>> rgraph = new ArrayList();
+        for (int i = 0; i < N; ++i) {
+            graph.add(new HashSet());
+            rgraph.add(new HashSet());
         }
 
-        Queue<Integer> q = new LinkedList<>();
-        for (int i = 0; i < size; i++) {
-            if (g[i].length == 0) {
-                q.add(i);
-            }
-            for (int j = 0; j < g[i].length; j++) {
-                fromToList.get(i).add(g[i][j]);
-                toFromList.get(g[i][j]).add(i);
+        Queue<Integer> queue = new LinkedList();
+
+        for (int i = 0; i < N; ++i) {
+            if (G[i].length == 0)
+                queue.offer(i);
+            for (int j: G[i]) {
+                graph.get(i).add(j);
+                rgraph.get(j).add(i);
             }
         }
 
-        List<Integer> ans = new ArrayList<>();
-        while (!q.isEmpty()) {
-            int idx = q.poll();
-            ans.add(idx);
-
-            for (int i : toFromList.get(idx)) {
-                fromToList.get(i).remove(idx);
-                if (fromToList.get(i).isEmpty()) {
-                    q.add(i);
-                }
+        while (!queue.isEmpty()) {
+            int j = queue.poll();
+            safe[j] = true;
+            for (int i: rgraph.get(j)) {
+                graph.get(i).remove(j);
+                if (graph.get(i).isEmpty())
+                    queue.offer(i);
             }
         }
-        Collections.sort(ans);
+
+        List<Integer> ans = new ArrayList();
+        for (int i = 0; i < N; ++i) if (safe[i])
+            ans.add(i);
+
         return ans;
     }
 }
