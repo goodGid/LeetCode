@@ -20,17 +20,7 @@ class Solution {
                     list.add(sum);
                     break;
                 default:
-                    int flag = 1;
-                    int val = 0;
-                    for (char c : chars) {
-                        if (c == '-') {
-                            flag = -1;
-                            continue;
-                        }
-                        val *= 10;
-                        val += c - '0';
-                    }
-                    list.add(val * flag);
+                    list.add(Integer.parseInt(ops[i]));
                     break;
             }
         }
