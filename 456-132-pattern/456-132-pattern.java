@@ -1,3 +1,5 @@
+// ref : https://leetcode.com/problems/132-pattern/discuss/2015224/Java-4-Approaches%3A-BF-O(n3)-BF-O(n2)-TreeMap-Monotonic-Stack
+
 class Solution {
     public boolean find132pattern(int[] nums) {
         int len = nums.length;
