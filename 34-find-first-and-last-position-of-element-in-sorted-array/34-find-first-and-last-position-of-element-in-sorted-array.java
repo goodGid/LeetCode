@@ -1,42 +1,42 @@
-class Solution {
+// ref : https://leetcode.com/problems/find-first-and-last-position-of-element-in-sorted-array/discuss/14734/Easy-java-O(logn)-solution
+
+public class Solution {
     public int[] searchRange(int[] nums, int target) {
-        int length = nums.length;
-        int l = 0;
-        int r = length-1;
-        int m = -1;
-        boolean isFindVal = false;
-        
-        while (l <= r) {
-            m = (l+r) / 2;
-            if (nums[m] == target) {
-                isFindVal = true;
-                break;
-            }
-            
-            if (target < nums[m]) {
-                r = m - 1;
+        int[] result = new int[2];
+        result[0] = findFirst(nums, target);
+        result[1] = findLast(nums, target);
+        return result;
+    }
+
+    private int findFirst(int[] nums, int target) {
+        int idx = -1;
+        int start = 0;
+        int end = nums.length - 1;
+        while (start <= end) {
+            int mid = (start + end) / 2;
+            if (nums[mid] >= target) {
+                end = mid - 1;
             } else {
-                l = m + 1;
+                start = mid + 1;
             }
+            if (nums[mid] == target) {idx = mid;}
         }
-        
-        if (isFindVal == false) {
-            return new int[] {-1, -1};
-        }
-        
-        for (int i=m; i>=0; i--) {
-            if (nums[i] == target) {
-                l = i;
+        return idx;
+    }
+
+    private int findLast(int[] nums, int target) {
+        int idx = -1;
+        int start = 0;
+        int end = nums.length - 1;
+        while (start <= end) {
+            int mid = (start + end) / 2;
+            if (nums[mid] <= target) {
+                start = mid + 1;
+            } else {
+                end = mid - 1;
             }
+            if (nums[mid] == target) {idx = mid;}
         }
-        
-        for (int i=m; i<length;i ++) {
-            if (nums[i] == target) {
-                r = i;
-            }
-        }
-        
-        
-        return new int[] {l,r};
+        return idx;
     }
 }
