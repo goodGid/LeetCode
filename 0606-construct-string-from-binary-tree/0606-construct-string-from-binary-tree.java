@@ -1,53 +1,28 @@
-/**
- * Definition for a binary tree node.
- * public class TreeNode {
- *     int val;
- *     TreeNode left;
- *     TreeNode right;
- *     TreeNode() {}
- *     TreeNode(int val) { this.val = val; }
- *     TreeNode(int val, TreeNode left, TreeNode right) {
- *         this.val = val;
- *         this.left = left;
- *         this.right = right;
- *     }
- * }
- */
-class Solution {
-    private final String LEFT = "(";
-    private final String RIGHT = ")";
 
-    public String tree2str(TreeNode root) {
-        if (root == null) {
-            return null;
+public class Solution {
+    public String tree2str(TreeNode t) {
+        if (t == null)
+            return "";
+        Stack < TreeNode > stack = new Stack < > ();
+        stack.push(t);
+        Set < TreeNode > visited = new HashSet < > ();
+        StringBuilder s = new StringBuilder();
+        while (!stack.isEmpty()) {
+            t = stack.peek();
+            if (visited.contains(t)) {
+                stack.pop();
+                s.append(")");
+            } else {
+                visited.add(t);
+                s.append("(" + t.val);
+                if (t.left == null && t.right != null)
+                    s.append("()");
+                if (t.right != null)
+                    stack.push(t.right);
+                if (t.left != null)
+                    stack.push(t.left);
+            }
         }
-
-        StringBuilder sb = new StringBuilder(String.valueOf(root.val));
-
-        TreeNode leftNode = root.left;
-        TreeNode rightNode = root.right;
-
-        if (leftNode != null && rightNode != null) {
-            sb.append(LEFT);
-            sb.append(tree2str(leftNode));
-            sb.append(RIGHT);
-            sb.append(LEFT);
-            sb.append(tree2str(rightNode));
-            sb.append(RIGHT);
-        } else if (leftNode != null && rightNode == null) {
-            sb.append(LEFT);
-            sb.append(tree2str(leftNode));
-            sb.append(RIGHT);
-        } else if (leftNode == null && rightNode != null) {
-            sb.append(LEFT);
-            sb.append(RIGHT);
-            sb.append(LEFT);
-            sb.append(tree2str(rightNode));
-            sb.append(RIGHT);
-        } else if (leftNode == null && rightNode == null) {
-            // Nothing
-        }
-
-        return sb.toString();
+        return s.substring(1, s.length() - 1);
     }
 }
