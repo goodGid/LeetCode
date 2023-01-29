@@ -4,9 +4,7 @@ class Solution {
 
     public int totalNQueens(int n) {
         visit = new int[n][n];
-
         dfs(n, 0, 0);
-
         return ans;
     }
 
@@ -19,24 +17,12 @@ class Solution {
         for (int i = 0; i < n; i++) {
             if (visit[stLine][i] == 0) {
                 visit(n, stLine, i);
-                // print(n);
                 cnt++;
                 dfs(n, stLine + 1, cnt);
                 unVisit(n, stLine, i);
-                // print(n);
                 cnt--;
             }
         }
-    }
-
-    private void print(int n) {
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < n; j++) {
-                System.out.print(visit[i][j] + "");
-            }
-            System.out.println();
-        }
-        System.out.println();
     }
 
     private void visit(int n, int x, int y) {
@@ -116,4 +102,15 @@ class Solution {
             visit[x - i][y + i]--;
         }
     }
+
+    private void print(int n) {
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                System.out.print(visit[i][j] + "");
+            }
+            System.out.println();
+        }
+        System.out.println();
+    }
+
 }
