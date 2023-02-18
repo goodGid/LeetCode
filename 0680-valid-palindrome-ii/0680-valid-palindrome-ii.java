@@ -1,20 +1,27 @@
+// ref : https://leetcode.com/problems/valid-palindrome-ii/discuss/1904942/JavaC%2B%2B-Awesome-Visuall-EXPLANATION
+
 class Solution {
     public boolean validPalindrome(String s) {
-        return valid(s.toCharArray(), 0, s.length()-1, true);
-    }
-    
-    private boolean valid(char[] s, int left, int right, boolean isSkipable) {
-        boolean ans = true;
-        while (left < right) {
-            if (s[left] == s[right]) {
-                left ++;
-                right --;
-            } else if (isSkipable == false) {
-                return false;
-            } else {
-                return valid(s,left+1,right,false) || valid(s,left,right-1,false);
+        int i = 0;
+        int j = s.length() - 1;
+        
+        while(i <= j){
+            if(s.charAt(i) == s.charAt(j)){
+                i++;
+                j--;
             }
+            else return isPalindrome(s, i + 1, j) || isPalindrome(s, i, j - 1);
         }
-        return ans;
+        return true;
+    }
+    public boolean isPalindrome(String s, int i, int j){
+        while(i <= j){
+            if(s.charAt(i) == s.charAt(j)){
+                i++;
+                j--;
+            }
+            else return false;
+        }
+        return true;
     }
 }
