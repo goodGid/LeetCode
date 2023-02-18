@@ -12,15 +12,7 @@ class Solution {
             } else if (isSkipable == false) {
                 return false;
             } else {
-                boolean subAns1 = valid(s,left+1,right,false);
-                if (subAns1) {
-                    return true;
-                }
-                boolean subAns2 = valid(s,left,right-1,false);
-                if (subAns2) {
-                    return true;
-                }
-                return false;
+                return valid(s,left+1,right,false) || valid(s,left,right-1,false);
             }
         }
         return ans;
