@@ -1,39 +1,37 @@
-class Solution {
+public class Solution {
     public String removeKdigits(String num, int k) {
-        int size = num.length();
-        if (size == k) {
+        int len = num.length();
+        //corner case
+        if(k==len)        
             return "0";
-        }
-
-        Stack<Character> st = new Stack<>();
-        char[] c = num.toCharArray();
-
-        for (int i = 0; i < size; i++) {
-            char cur = c[i];
-
-            while (!st.isEmpty() && st.peek() > cur && k != 0) {
+            
+        Stack<Character> stack = new Stack<>();
+        int i =0;
+        while(i<num.length()){
+            //whenever meet a digit which is less than the previous digit, discard the previous one
+            while(k>0 && !stack.isEmpty() && stack.peek()>num.charAt(i)){
+                stack.pop();
                 k--;
-                st.pop();
             }
-
-            st.push(cur);
+            stack.push(num.charAt(i));
+            i++;
         }
-
-        while (k != 0) {
-            k--;
-            st.pop();
+        
+        // corner case like "1111"
+        while(k>0){
+            stack.pop();
+            k--;            
         }
-
+        
+        //construct the number from the stack
         StringBuilder sb = new StringBuilder();
-        while (!st.isEmpty()) {
-            sb.append(st.pop());
-        }
-        String ans = sb.reverse().toString();
-
-         while (ans.startsWith("0") && ans.length() != 1) {
-             ans = ans.substring(1);
-        }
-        return ans;
-
+        while(!stack.isEmpty())
+            sb.append(stack.pop());
+        sb.reverse();
+        
+        //remove all the 0 at the head
+        while(sb.length()>1 && sb.charAt(0)=='0')
+            sb.deleteCharAt(0);
+        return sb.toString();
     }
 }
