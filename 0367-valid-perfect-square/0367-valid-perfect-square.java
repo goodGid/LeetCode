@@ -1,12 +1,22 @@
-// from : https://leetcode.com/problems/valid-perfect-square/discuss/3333620/Java-Detailed-Explaination-with-Full-trace-for-both-perfect-and-non-perfect-square-beats-100
-
 class Solution {
     public boolean isPerfectSquare(int num) {
-        int i=1;
-        while(num>0){
-            num-=i;
-            i+=2;
-        }
-        return num==0;
+        int l = 0;
+        int r = num;
+        int m;
+        boolean ans = false;
+        
+        while (l<=r) {
+            m = l + (r-l) / 2;
+            long sq = (long) m * m;
+            if (num == sq) {
+                ans = true;
+                break;
+            } else if (num < sq) {
+                r = m - 1;
+            } else { 
+                l = m + 1;
+            }
+        }        
+        return ans;
     }
 }
