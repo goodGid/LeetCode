@@ -1,15 +1,14 @@
 class Solution {
     public boolean canMakeArithmeticProgression(int[] arr) {
         Arrays.sort(arr);
-        
-        int diff = arr[1] - arr[0];
+        int common = Math.abs(arr[1] - arr[0]);
         
         for (int i=2; i<arr.length; i++) {
-            if (arr[i] - arr[i-1] != diff) {
+            if (Math.abs(arr[i]- arr[i-1]) != common) {
                 return false;
             }
         }
-     
+    
         return true;
     }
 }
