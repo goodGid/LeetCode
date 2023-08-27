@@ -22,13 +22,10 @@ class Solution {
             return 0;
         }
         
-        System.out.println(x + " " + y);
         int x2 = x;
         int y2 = y;
-        
-        
+                
         for (int j=y; j>=0; j--) {
-            System.out.println(grid[x][j]);
             if (grid[x][j] > 0) {
                 break;
             }
@@ -41,9 +38,6 @@ class Solution {
             }
             x2 = i;
         }
-        
-
-        System.out.println(x2 + " " + y2);
 
         int cnt = 0;
         for (int i=x2; i<n; i++) {
