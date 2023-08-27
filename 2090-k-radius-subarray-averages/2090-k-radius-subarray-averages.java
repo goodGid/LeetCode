@@ -14,7 +14,6 @@ class Solution {
         
         for (int i=k; i<size-k && i<size; i++) {
             sum += nums[i+k];
-            // System.out.println(sum);
             ans[i] = (int) (sum / (k*2+1));
             sum -= nums[i-k];
         }
