@@ -1,44 +1,51 @@
-// ref : 정답 코드 중 Runtime 효율 1위 블록 참고
 class Solution {
     public String reorganizeString(String s) {
-        int[] freq = new int[26]; //to Store Frequency of each alphabet
         char[] arr = s.toCharArray();
+        int size = s.length();
+        Map<Character, Integer> map = new HashMap<>();
+        PriorityQueue<Node> pq = new PriorityQueue<>((o1, o2) -> o2.getValue() - o1.getValue());
 
-        for (int i = 0; i < arr.length; i++) {  //store the frequency
-            freq[arr[i] - 'a']++;
+        for (char c : arr) {
+            map.put(c, map.getOrDefault(c, 0) + 1);
+        }
+        for (Character key : map.keySet()) {
+            Integer i = map.get(key);
+            pq.add(new Node(key, i));
         }
 
-        int max = 0, letter = 0;
-        for (int i = 0; i < 26; i++) {  //find the max frequency
-            if (freq[i] > max) {
-                max = freq[i];
-                letter = i;
-            }
+        if (pq.peek().cnt > (size + 1) / 2) {
+            return "";
         }
 
-        if (max > (s.length() + 1) / 2) {
-            return ""; //if max is more than half then not possible
-        }
-
+        char[] ans = new char[size];
         int idx = 0;
-        char[] res = new char[s.length()];
-
-        while (freq[letter] > 0) {   //distribute the max freq char into even indices
-            res[idx] = (char) (letter + 'a');
-            idx += 2;
-            freq[letter]--;
-        }
-
-        for (int i = 0; i < 26; i++) {
-            while (freq[i] > 0) {
-                if (idx >= s.length()) {
-                    idx = 1; //all even indices filled, so switch to odd indices
-                }
-                res[idx] = (char) (i + 'a');
+        while (!pq.isEmpty()) {
+            Node node = pq.poll();
+            for (int i = 0; i < node.cnt; i++) {
+                ans[idx] = node.c;
                 idx += 2;
-                freq[i]--;
+                if (idx >= size) {
+                    idx %= size;
+                    if (idx % 2 == 0) { // [1]
+                        idx++;
+                    }
+                }
             }
         }
-        return String.valueOf(res);
+        return String.valueOf(ans);
+    }
+
+    class Node {
+        char c;
+        int cnt;
+
+        public Node(char _c, int _cnt) {
+            c = _c;
+            cnt = _cnt;
+        }
+
+        public int getValue() {
+            return this.cnt;
+        }
     }
 }
