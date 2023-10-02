@@ -25,10 +25,7 @@ class Solution {
                 ans[idx] = node.c;
                 idx += 2;
                 if (idx >= size) {
-                    idx %= size;
-                    if (idx % 2 == 0) { // [1]
-                        idx++;
-                    }
+                    idx = 1;
                 }
             }
         }
