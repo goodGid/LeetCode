@@ -1,86 +1,69 @@
 class Solution {
     public String reorganizeString(String s) {
-        if (s.length() == 1) {
-            return s;
-        }
+        char[] arr = s.toCharArray();
+        int size = s.length();
         Map<Character, Integer> map = new HashMap<>();
+        PriorityQueue<Node> pq = new PriorityQueue<>((o1, o2) -> o2.getValue() - o1.getValue());
 
-        for (char c : s.toCharArray()) {
-            map.put(c, map.getOrDefault(c, 0) + 1);
-        }
-
-        PriorityQueue<Node> pq = new PriorityQueue<>();
-
-        for (Character key : map.keySet()) {
-            pq.add(new Node(key, map.get(key)));
-        }
-
-        int idx = 0;
-        char[] chars = new char[s.length()];
-        while (pq.size() > 1) {
-            Node node1 = pq.poll();
-            Node node2 = pq.poll();
-
-            if (idx == 0) {
-                chars[idx] = node1.getVal();
-                idx++;
-                if (node1.getCnt() - 1 > 0) {
-                    pq.add(new Node(node1.getVal(), node1.getCnt() - 1));
-                }
-                pq.add(node2);
-                continue;
+        if (size == 3) {
+            if (arr[0] == arr[1] && arr[1] == arr[2]) {
+                return "";
             }
-
-            if (chars[idx - 1] == node1.getVal()) {
-                chars[idx] = node2.getVal();
-                idx++;
-                if (node2.getCnt() - 1 > 0) {
-                    pq.add(new Node(node2.getVal(), node2.getCnt() - 1));
-                }
-                pq.add(node1);
-            } else {
-                chars[idx] = node1.getVal();
-                idx++;
-                if (node1.getCnt() - 1 > 0) {
-                    pq.add(new Node(node1.getVal(), node1.getCnt() - 1));
-                }
-                pq.add(node2);
+            for (int i = 0; i < 3; i++) {
+                map.put(arr[i], map.getOrDefault(arr[i], 0) + 1);
             }
-        }
-
-        Node lastNode = pq.poll();
-        
-        if (lastNode.getCnt() > 1) {
-            return "";
-        } else if (chars[idx - 1] == lastNode.getVal()) {
-            return "";
+            for (Character key : map.keySet()) {
+                Integer i = map.get(key);
+                pq.add(new Node(key, i));
+            }
         } else {
-            chars[idx] = lastNode.getVal();
+            int maxCnt = 0;
+            for (char c : arr) {
+                map.put(c, map.getOrDefault(c, 0) + 1);
+            }
+            for (Character key : map.keySet()) {
+                Integer i = map.get(key);
+                pq.add(new Node(key, i));
+            }
+
+            if (size % 2 == 1 && pq.peek().cnt > size / 2 + 1) {
+                return "";
+            }
+
+            if (size % 2 == 0 && pq.peek().cnt > size / 2) {
+                return "";
+            }
         }
 
-        return String.valueOf(chars);
-    }
-}
-
-class Node implements Comparable<Node> {
-    private char val;
-    private int cnt;
-
-    public Node(char val, int cnt) {
-        this.val = val;
-        this.cnt = cnt;
-    }
-
-    public char getVal() {
-        return val;
-    }
-
-    public int getCnt() {
-        return cnt;
+        char[] ans = new char[size];
+        int idx = 0;
+        while (!pq.isEmpty()) {
+            Node node = pq.poll();
+            for (int i = 0; i < node.cnt; i++) {
+                ans[idx] = node.c;
+                idx = idx + 2;
+                if (idx >= size) {
+                    idx %= size;
+                    if (idx % 2 == 0) {
+                        idx++;
+                    }
+                }
+            }
+        }
+        return String.valueOf(ans);
     }
 
-    @Override
-    public int compareTo(Node newNode) {
-        return newNode.cnt - cnt; // 내림차순
+    class Node {
+        char c;
+        int cnt;
+
+        public Node(char _c, int _cnt) {
+            c = _c;
+            cnt = _cnt;
+        }
+
+        public int getValue() {
+            return this.cnt;
+        }
     }
 }
