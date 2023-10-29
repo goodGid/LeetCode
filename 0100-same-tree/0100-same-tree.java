@@ -19,14 +19,6 @@ class Solution {
         Queue<TreeNode> q1 = new LinkedList<>();
         Queue<TreeNode> q2 = new LinkedList<>();
         
-        if (p == null && q == null) {
-            return true;
-        } else if (p == null && q != null) {
-            return false;
-        } else if (p != null && q == null) {
-            return false;
-        }
-        
         if (p != null) {
             q1.add(p);
         }
