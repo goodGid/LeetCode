@@ -9,12 +9,15 @@ class Solution {
             int left = adjacentPairs[i][0];
             int right = adjacentPairs[i][1];
 
-            List<Integer> value = map.getOrDefault(left, new ArrayList<>());
-            value.add(right);
-            map.put(left, map.getOrDefault(left, value));
-            value = map.getOrDefault(right, new ArrayList<>());
-            value.add(left);
-            map.put(right, map.getOrDefault(right, value));
+            map.computeIfAbsent(left, k -> new ArrayList<>()).add(right);
+            map.computeIfAbsent(right, k -> new ArrayList<>()).add(left);
+            
+            // List<Integer> value = map.getOrDefault(left, new ArrayList<>());
+            // value.add(right);
+            // map.put(left, map.getOrDefault(left, value));
+            // value = map.getOrDefault(right, new ArrayList<>());
+            // value.add(left);
+            // map.put(right, map.getOrDefault(right, value));
         }
         
         int target = -1;
