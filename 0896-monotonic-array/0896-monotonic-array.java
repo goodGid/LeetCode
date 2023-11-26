@@ -1,25 +1,21 @@
 // from Accepted Solutions Runtime Distribution
 class Solution {
     public boolean isMonotonic(int[] nums) {
+        boolean increasing = true;
+        boolean decreasing = true;
 
-        int lowValue = nums[0];
-        int highValue = nums[nums.length - 1];
-        boolean increase = true;
+        for (int i = 1; i < nums.length; i++) {
+            if (nums[i] > nums[i - 1]) {
+                decreasing = false;
+            } else if (nums[i] < nums[i - 1]) {
+                increasing = false;
+            }
 
-        if (lowValue <= highValue) {
-            for (int i = 0; i < nums.length - 1; i++) {
-                if (nums[i] > nums[i+1]) {
-                    return false;
-                }
+            if (!increasing && !decreasing) {
+                return false;
             }
         }
-        else {
-           for (int i = 0; i < nums.length - 1; i++) {
-                if (nums[i] < nums[i+1]) {
-                    return false;
-                }
-            }
-        }
+
         return true;
     }
 }
