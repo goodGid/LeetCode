@@ -1,26 +1,15 @@
+// from Submit
 class Solution {
     public int[] sortArrayByParity(int[] nums) {
-        List<Integer> odds = new ArrayList<>();
-        int size = nums.length;
-        int[] ans = new int[size];
-        int idx = 0;
-        
-        for (int i : nums) {
-            odds.add(i);
+        int j = 0;
+        for(int i=0; i<nums.length; i++){
+            if(nums[i]%2 == 0){
+                int temp = nums[i];
+                nums[i] = nums[j];
+                nums[j++] = temp;
+            }
         }
-        
-        for (int i=size-1; i>=0; i--) {
-            if (nums[i] % 2 != 0) {
-                continue;
-            }           
-            ans[idx++] = nums[i];
-            odds.remove(i);
-        }
-        
-        for (int i : odds) {
-            ans[idx++] = i;
-        }
-        
-        return ans;
+
+        return nums;
     }
 }
