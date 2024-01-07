@@ -1,44 +1,33 @@
+// 240107
+// 정답 코드를 GPT에게 리팩토링 요청 
 class Solution {
     public int[][] insert(int[][] intervals, int[] newInterval) {
-        List<Node> rawList = new LinkedList<>();
-        int size = intervals.length;
+        List<int[]> result = new ArrayList<>();
+        int i = 0;
+        int n = intervals.length;
 
-        for (int i = 0; i < size; i++) {
-            rawList.add(new Node(intervals[i][0], intervals[i][1]));
-        }
-        rawList.add(new Node(newInterval[0], newInterval[1]));
-
-        rawList.sort(Comparator.comparingInt(prev -> prev.st));
-
-        List<Node> list = new LinkedList<>();
-        list.add(rawList.get(0));
-
-        for (int i = 1; i < size + 1; i++) {
-            Node prev = list.get(list.size() - 1);
-
-            if (prev.end >= rawList.get(i).st) {
-                prev.end = Math.max(prev.end, rawList.get(i).end);
-            } else {
-                list.add(rawList.get(i));
-            }
+        // 새로운 interval보다 작은 end를 갖는 모든 interval을 결과에 추가
+        while (i < n && intervals[i][1] < newInterval[0]) {
+            result.add(intervals[i]);
+            i++;
         }
 
-        int[][] ans = new int[list.size()][2];
-        for (int i = 0; i < list.size(); i++) {
-            ans[i][0] = list.get(i).st;
-            ans[i][1] = list.get(i).end;
+        // 겹치는 interval을 병합
+        while (i < n && intervals[i][0] <= newInterval[1]) {
+            newInterval[0] = Math.min(newInterval[0], intervals[i][0]);
+            newInterval[1] = Math.max(newInterval[1], intervals[i][1]);
+            i++;
         }
-        return ans;
+
+        // 병합된 interval 결과에 추가
+        result.add(newInterval);
+
+        // 새로운 interval보다 큰 start를 갖는 모든 interval을 결과에 추가
+        while (i < n) {
+            result.add(intervals[i]);
+            i++;
+        }
+
+        return result.toArray(new int[result.size()][]);
     }
-
-    private class Node {
-        int st;
-        int end;
-
-        public Node(int _st, int _end) {
-            st = _st;
-            end = _end;
-        }
-    }
-
 }
