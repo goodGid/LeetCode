@@ -1,26 +1,17 @@
 // from : Accepted Solutions Runtime Distribution
 class Solution {
     public int[][] kClosest(int[][] points, int k) {
-        int N = points.length;
-        int[] dists = new int[N];
-        for (int i = 0; i < N; ++i) {
-            dists[i] = dist(points[i]);
+        int [][] ans = new int [k][];
+        PriorityQueue<int[]> pq = new PriorityQueue<>((p1,p2)-> p2[0]*p2[0] + p2[1]*p2[1] - p1[0]*p1[0] - p1[1]*p1[1]);
+        for(int [] p : points){
+            pq.add(p);
+            if(pq.size()>k)
+                pq.poll();
         }
-
-        Arrays.sort(dists);
-        int distK = dists[k - 1];
-        int[][] ans = new int[k][2];
-        int t = 0;
-        for (int i = 0; i < N; ++i) {
-            if (dist(points[i]) <= distK) {
-                ans[t++] = points[i];
-            }
+        int i=0;
+        while(!pq.isEmpty()){
+            ans[i++] = pq.poll();
         }
-
         return ans;
-    }
-
-    public int dist(int[] point) {
-        return point[0] * point[0] + point[1] * point[1];
     }
 }
