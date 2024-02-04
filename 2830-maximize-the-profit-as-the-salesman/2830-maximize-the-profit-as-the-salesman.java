@@ -41,9 +41,7 @@ class Solution {
         int r = m - 1;
         int nextIdx = -1;
         while (l <= r) {
-            // int mid = right - (right-left)/2;
-            // int mid = r - (r-l)/ 2;
-            int mid = l + (r - l) / 2;
+            int mid = r - (r - l) / 2;
             int mv = offers.get(mid).get(0);
             if (mv > target) {
                 nextIdx = mid;
