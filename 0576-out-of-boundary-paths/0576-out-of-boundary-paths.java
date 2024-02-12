@@ -43,7 +43,6 @@ class Solution {
             if (!isRange(nx,ny)) {
                 cnt++;
             } else {
-                cnt %= mod;
                 cnt += (go(nx, ny, mvCnt-1) % mod);
                 cnt %= mod;
             }
