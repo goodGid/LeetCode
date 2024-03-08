@@ -8,8 +8,6 @@ class Solution {
             maxVal = Math.max(maxVal, arr[i]);
         }
         
-        System.out.println(maxVal);
-        
         int ans = 0;
         for (int i: nums) {
             if (arr[i] == maxVal) {
