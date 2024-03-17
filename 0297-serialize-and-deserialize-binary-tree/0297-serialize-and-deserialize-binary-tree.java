@@ -1,62 +1,78 @@
-// ref : https://leetcode.com/problems/serialize-and-deserialize-binary-tree/discuss/4472121/Use-Queue-and-StringBuilder
-
-public class Codec {
+class Codec {
+    private static final String DELIMETER = "_";
+    private static final String NULL = "x";
 
     // Encodes a tree to a single string.
-    public String serialize(TreeNode root) {
-
-        if(root == null) {
-            return "";
+    public static String serialize(TreeNode root) {
+        if (root == null) {
+            return NULL;
         }
-        Queue<TreeNode> queue = new LinkedList<>();
-        queue.offer(root);
-        var result = build(new StringBuilder(), queue);
-        //System.out.println("result" + result);
-        return result;
-    }
 
-    private String build(StringBuilder str, Queue<TreeNode> queue) {
+        Queue<TreeNode> q = new LinkedList<>();
+        q.add(root);
 
-        if(queue.isEmpty()) {
-            return str.toString();
+        StringBuilder sb = new StringBuilder();
+        sb.append(root.val).append(DELIMETER);
+
+        while (!q.isEmpty()) {
+            TreeNode node = q.poll();
+
+            if (Objects.nonNull(node.left)) {
+                q.add(node.left);
+                sb.append(node.left.val).append(DELIMETER);
+            } else {
+                sb.append(NULL).append(DELIMETER);
+            }
+
+            if (Objects.nonNull(node.right)) {
+                q.add(node.right);
+                sb.append(node.right.val).append(DELIMETER);
+            } else {
+                sb.append(NULL).append(DELIMETER);
+            }
         }
-        var node = queue.poll();
-        if(node == null) {
-             str.append("-_");
-        } else {
-             str.append(node.val).append("_");
-             queue.offer(node.left);
-             queue.offer(node.right);
-        }
-        return build(str, queue);
+        return sb.toString();
     }
 
     // Decodes your encoded data to tree.
-    public TreeNode deserialize(String data) {
-        if(data.equals("")) {
+    public static TreeNode deserialize(String data) {
+        String[] splits = data.split(DELIMETER);
+
+        List<String> lists = new ArrayList<>();
+        for (String s : splits) {
+            if (s.equals(DELIMETER)) {
+                continue;
+            }
+            lists.add(s);
+        }
+
+        if (lists.isEmpty()) {
             return null;
         }
-        String[] arr = data.split("_");
-        var root = new TreeNode(Integer.valueOf(arr[0]));
-        Queue<TreeNode> queue = new LinkedList<>();
+        if (lists.get(0).equals(NULL)) {
+            return null;
+        }
+        
+        int idx = 0;
+        TreeNode root = new TreeNode(Integer.parseInt(lists.get(idx++)));
+        Queue<TreeNode> q = new LinkedList<>();
+        q.add(root);
 
-        queue.offer(root);
-        int index = 0;
-        while(!queue.isEmpty()) {
-            var node = queue.poll();
+        while (idx < lists.size()) {
+            TreeNode node = q.poll();
 
-            if(!arr[++index].equals("-")) {
-                var left = new TreeNode(Integer.valueOf(arr[index]));
-                node.left = left;
-                queue.offer(left);
+            String val = lists.get(idx++);
+            if (!val.equals(NULL)) {
+                node.left = new TreeNode(Integer.valueOf(val));
+                q.add(node.left);
             }
-            if(!arr[++index].equals("-")) {
-                var right = new TreeNode(Integer.valueOf(arr[index]));
-                node.right = right;
-                queue.offer(right);
+
+            val = lists.get(idx++);
+            if (!val.equals(NULL)) {
+                node.right = new TreeNode(Integer.valueOf(val));
+                q.add(node.right);
             }
         }
-
         return root;
     }
 }
