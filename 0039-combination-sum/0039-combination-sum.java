@@ -1,49 +1,26 @@
-class Solution {
+// from : 정답코드를 지피티한테 리팩토링 시킨 코드
+public class Solution {
     public List<List<Integer>> combinationSum(int[] candidates, int target) {
-        Node[] nodes = new Node[41];
-        for (int i = 1; i <= target; i++) {
-            nodes[i] = new Node(i);
+        // Node 클래스 삭제 및 기능 이동
+        List<List<Integer>>[] dp = new ArrayList[target + 1];
+        for (int i = 0; i <= target; i++) {
+            dp[i] = new ArrayList<>();
         }
 
+        // 0을 만들기 위해서는 아무런 요소도 사용할 필요가 없음
+        dp[0].add(new ArrayList<>());
+
+        // 후보군마다 조합을 만듦
         for (int candidate : candidates) {
             for (int i = candidate; i <= target; i++) {
-                if (i == candidate) {
-                    Node node = nodes[candidate];
-                    node.add(Collections.singletonList(candidate));
-                    continue;
-                }
-                List<List<Integer>> subList = nodes[i - candidate].getList();
-                if (subList.isEmpty()) {
-                    continue;
-                }
-
-                for (List<Integer> sub : subList) {
-                    List<Integer> list = new ArrayList<>();
-                    list.add(candidate);
-                    for (int val : sub) {
-                        list.add(val);
-                    }
-                    nodes[i].add(list);
+                for (List<Integer> combination : dp[i - candidate]) {
+                    List<Integer> newCombination = new ArrayList<>(combination);
+                    newCombination.add(candidate);
+                    dp[i].add(newCombination);
                 }
             }
         }
-        return nodes[target].getList();
-    }
 
-    class Node {
-        int val;
-        List<List<Integer>> list = new ArrayList<>();
-
-        public Node(int _val) {
-            this.val = _val;
-        }
-
-        public void add(List<Integer> subList) {
-            this.list.add(subList);
-        }
-
-        public List<List<Integer>> getList() {
-            return this.list;
-        }
+        return dp[target];
     }
 }
